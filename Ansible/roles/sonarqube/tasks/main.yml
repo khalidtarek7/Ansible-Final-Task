@@ -1,0 +1,24 @@
+- hosts: sonarqube
+  become: yes
+
+  tasks:
+    - name: Install Java
+      apt:
+        name: openjdk-8-jdk
+        state: present
+
+    - name: Add SonarQube Repository Key
+      apt_key:
+        url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.3.48735.zip.asc
+        state: present
+
+    - name: Add SonarQube Repository
+      apt_repository:
+        repo: deb https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.3.48735.zip ./ 
+        state: present
+
+    - name: Install SonarQube
+      apt:
+        name: sonarqube
+        state: present
+
